@@ -1,4 +1,6 @@
 const express = require('express')
+const db = require('./model/db') // calls file db.js in which is connect() function
+
 const app = express()
 
 app.set('view engine', 'ejs')
@@ -10,5 +12,13 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
-app.listen(3000)
+const userRouter = require('./routes/users')
+const projectsRouter = require('./routes/projects')
+
+app.use('/users', userRouter)
+app.use('/projects', projectsRouter)
+
+app.listen(3000, () => {
+    console.log(`Server started on port 3000`)
+})
 
