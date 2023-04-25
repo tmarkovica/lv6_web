@@ -5,21 +5,12 @@ const ProjectModel = require('../model/project')
 // Read
 router.get('/', async (req, res) => {
    try {
-        const result = await ProjectModel.find()
-        res.status(200).send(result)    
+        const projects = await ProjectModel.find()
+        //res.status(200).send(projects)
+        res.render('projects', {projects})
    } catch (err) {
         res.status(500).json({error: err.message})
    }
-})
-
-router.get('/:id', async (req, res) => {
-    try {
-        const id = req.params.id
-         const result = await ProjectModel.findById(id)
-         res.status(200).send(result)    
-    } catch (err) {
-         res.status(500).json({error: err.message})
-    }
 })
 
 router.get('/new', (req, res) => {
@@ -82,6 +73,7 @@ router.delete('/:id', async (req, res) => {
         if (result === null) {
             // If no project was found with the matching ID, return a 404 response
             res.status(404).send('Project not found');
+            res.render('/projects')
         } else {
             // If the project was deleted successfully, return a 204 response
             res.status(204).send();
@@ -89,6 +81,52 @@ router.delete('/:id', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal server error');
+    }
+})
+
+router.get('/newmember/:projectId', async (req, res) => {
+    const projectId = req.params.projectId
+
+    res.render('newmember', {projectId})
+})
+
+// add member
+router.post('/newmember/:projectId', async (req, res) => {
+    const projectId = req.params.projectId
+    var member = req.body.name
+
+    ProjectModel.findByIdAndUpdate(projectId, { $push: { members: { name: member } } }, { new: true })
+    .then(updatedProject => {
+        console.log(updatedProject);
+        res.redirect(`/projects/details/${projectId}`);
+    })
+    .catch(err => {
+        console.error(err);
+        res.redirect('/')
+    });
+
+})
+
+router.get('/details/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+         const result = await ProjectModel.findById(id)
+         //res.status(200).send(result)    
+         console.log(result)
+         res.render('projectdetails', {result})
+    } catch (err) {
+         res.status(500).json({error: err.message})
+    }
+})
+
+router.get('/edit/:id', async (req, res) => {
+    try {
+        const id = req.params.id
+         const result = await ProjectModel.findById(id)
+         res.render('editproject', {result})
+    } catch (err) {
+         res.status(500).json({error: err.message})
+         res.redirect('/projects')
     }
 })
 

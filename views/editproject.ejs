@@ -39,25 +39,25 @@
     
     <h1>Forma za dodavanje projekta</h1>
 
-    <form method="POST" action="/projects">
+    <form method="PUT" action="/projects/<%= result._id %>">
 
         <label for="naziv_projekta">Naziv projekta</label>
-        <input type="text" name="naziv_projekta" id="naziv_projekta">
+        <input type="text" name="naziv_projekta" id="naziv_projekta" value="<%= result.naziv_projekta %>">
 
         <label for="opis_projekta">Opis projekta</label>
-        <input type="text" name="opis_projekta" id="opis_projekta">
+        <input type="text" name="opis_projekta" id="opis_projekta" value="<%= result.opis_projekta %>">
 
         <label for="cijena_projekta">Cijena projekta</label>
-        <input type="number" name="cijena_projekta" id="cijena_projekta">
+        <input type="number" name="cijena_projekta" id="cijena_projekta" value="<%= result.cijena_projekta %>">
 
         <label for="obavljeni_poslovi">Obavljeni poslovi</label>
-        <input type="text" name="obavljeni_poslovi" id="obavljeni_poslovi">
+        <input type="text" name="obavljeni_poslovi" id="obavljeni_poslovi" value="<%= result.obavljeni_poslovi %>">
 
         <label for="datum_pocetka">Datum pocetka</label>
-        <input type="date" name="datum_pocetka" id="datum_pocetka">
+        <input type="date" name="datum_pocetka" id="datum_pocetka" value="<%= result.datum_pocetka %>">
 
         <label for="datum_zavrsetka">Datum zavrsetka</label>
-        <input type="date" name="datum_zavrsetka" id="datum_zavrsetka">
+        <input type="date" name="datum_zavrsetka" id="datum_zavrsetka" value="<%= result.datum_zavrsetka %>">
 
         <button type="submit">Pohrani</button>
 

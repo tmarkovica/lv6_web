@@ -8,9 +8,6 @@ app.set('view engine', 'ejs')
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
-    console.log('Here')
-    //res.status(500).send('Hi')
-
     res.render('index')
 })
 
