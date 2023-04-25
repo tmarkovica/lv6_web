@@ -1,9 +1,11 @@
 const express = require('express')
 const db = require('./model/db') // calls file db.js in which is connect() function
+const bodyParser = require('body-parser');
 
 const app = express()
 
 app.set('view engine', 'ejs')
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
     console.log('Here')
